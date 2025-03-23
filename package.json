@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "prisma generate && next build && prisma migrate dev && bunx run seed",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
-    "migrate": "prisma migrate dev && bunx run seed",
-    "seed": "prisma db seed"
+    "migrate:dev": "prisma migrate dev && bunx run seed",
+    "migrate:deploy": "prisma migrate deploy && bunx run seed",
+    "seed": "prisma db seed",
+    "vercel-build": "prisma generate && next build && bun run migrate:deploy"
   },
   "dependencies": {
     "@prisma/client": "^6.5.0",
