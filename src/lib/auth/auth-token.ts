@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import authConfig from './auth-config';
 
 export function getJwtSecretKey() {
-	const secret = process.env.JWT_SECRET;
+	const secret = process.env.NEXT_PUBLIC_JWT_SECRET;
 
 	if (!secret) {
 		throw new Error('Llave secreta JWT no configurada');
