@@ -57,7 +57,7 @@ export async function logout() {
 	return null;
 }
 
-export async function setUserDataCookie(userData) {
+export async function setUserDataCookie(userData: {id: number, nombre: string, cedula: string, telefono: string, ipAddress: string}) {
 	const cookieStore = await cookies();
 
 	cookieStore.set({
@@ -70,7 +70,7 @@ export async function setUserDataCookie(userData) {
 }
 
 
-export async function setJWT(userData) {
+export async function setJWT(userData: {id: number, nombre: string, cedula: string, telefono: string, ipAddress: string}) {
 	const token = await new SignJWT({
 		id: userData.id,
 		nombre: userData.nombre,
