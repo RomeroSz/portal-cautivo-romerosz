@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import { getRandomAd, getUserData, registroAdsAction } from "@/lib/actions/project-actions";
-import Image from "next/image";
 import Link from "next/link";
 
 export default async function AdsViewPage() {
