@@ -40,7 +40,6 @@ export async function login(formData: FormData) {
     });
     await setJWT(userData);
     setUserDataCookie(userData);
-    console.log('userData', userData)
     redirect('/adsView')
 }
 export async function registroAdsAction(formData: FormData) {

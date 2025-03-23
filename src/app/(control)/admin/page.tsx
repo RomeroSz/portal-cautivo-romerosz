@@ -3,7 +3,6 @@ import { formatDateToShortDate } from "@/lib/utils/utils";
 
 export default async function AdminPage() {
     const adsData = await getAdsData();
-    console.log('adsData', adsData);
     return (
         <div className="px-4 sm:px-6 lg:px-8">
             <div className="sm:flex sm:items-center">
