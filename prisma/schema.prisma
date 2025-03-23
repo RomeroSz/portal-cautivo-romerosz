@@ -1,0 +1,36 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  cedula    String    @unique
+  nombre    String
+  telefono  String
+  ipAddress String
+  adClicks  AdClick[]
+}
+
+model Ad {
+  id          Int       @id @default(autoincrement())
+  title       String
+  description String
+  imageUrl    String
+  targetUrl   String
+  adClicks    AdClick[]
+}
+
+model AdClick {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  adId      Int
+  ad        Ad       @relation(fields: [adId], references: [id])
+  ipAddress String
+  clickedAt DateTime @default(now())
+}
