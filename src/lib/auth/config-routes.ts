@@ -1,1 +1,1 @@
-export const authRoutes = ['/adsView/*'];
+export const authRoutes = ['/adsView/*', '/admin/*'];

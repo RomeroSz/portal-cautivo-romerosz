@@ -1,10 +1,11 @@
 "use server";
 import prisma from "@/db/prisma"
 import { getUserDataCookie, logout, setJWT, setUserDataCookie } from "../auth/auth-token";
-import { redirect } from "next/navigation"
 import { headers } from "next/headers";
 import ip from 'ip';
 import { AdClickSchema, LoginSchema } from "@/db/validations/validationShema";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function logoutAction() {
     await logout()
@@ -39,9 +40,11 @@ export async function login(formData: FormData) {
         create: { cedula, nombre, telefono, ipAddress }
     });
     await setJWT(userData);
-    setUserDataCookie(userData);
-    redirect('/adsView')
+    await setUserDataCookie(userData);
+    revalidatePath('/adsView');
+    return { redirect: '/adsView' };
 }
+
 export async function registroAdsAction(formData: FormData) {
     const headersList = await headers();
     let ipAddress = headersList.get('x-forwarded-for') ?? headersList.get('x-real-ip') ?? 'unknown';

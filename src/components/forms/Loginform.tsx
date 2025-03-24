@@ -1,14 +1,16 @@
 "use client";
 import { login } from '@/lib/actions/project-actions'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 import { toast } from 'sonner';
 
 export default function LoginForm() {
 
     const formRef = useRef<HTMLFormElement>(null)
+    const router = useRouter();
     const loginFormFunction = async (formData: FormData) => {
-        const loginPromise = new Promise(async (resolve, reject) => {
+        const loginPromise: Promise<{ redirect?: string }> = new Promise(async (resolve, reject) => {
             try {
                 const loginData = await login(formData);
                 resolve(loginData);
@@ -18,11 +20,15 @@ export default function LoginForm() {
         });
         toast.promise(loginPromise, {
             loading: 'Cargando...',
-            success: () => {
+            success: (data: { redirect?: string }) => {
                 formRef.current?.reset();
-                return `Usuario logueado con exito`;
+                if (data.redirect) {
+                    router.push(data.redirect);
+                }
+                return `Usuario logueado con éxito`;
             },
             error: (error) => {
+                console.log('error', error);
                 if (error instanceof Error && error.message) {
                     return error.message;
                 } else {
